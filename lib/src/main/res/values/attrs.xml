@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DotView">
+        <attr name="dot_margin_top" format="dimension"/>
+        <attr name="dot_margin_left" format="dimension"/>
+        <attr name="dot_tips_count" format="integer"/>
+        <attr name="dot_is_show" format="boolean"/>
+        <attr name="dot_color" format="color"/>
+        <attr name="dot_horizontal_padding" format="dimension"/>
+        <attr name="dot_gravity">
+            <enum name="top" value="0"/>
+            <enum name="center_vertical" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DotTextView">
+        <attr name="dot_is_follow_text" format="boolean"/>
+    </declare-styleable>
+</resources>
