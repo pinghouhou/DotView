@@ -19,8 +19,8 @@ public class DotRadioButton extends RadioButton {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Drawable[] drawables = getCompoundDrawables();
-        int width = drawables[1].getIntrinsicWidth() /2 + w;
-        mDotView.onSizeChanged(width, h);
+        int width = drawables[1].getIntrinsicWidth() / 2 + w;
+        mDotView.onSizeChanged(width, h, true);
     }
 
     @Override

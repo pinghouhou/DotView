@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class DotImageView extends ImageView  {
+public class DotImageView extends ImageView {
 
     private DotView mDotView;
 
@@ -17,8 +17,10 @@ public class DotImageView extends ImageView  {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        int width = getDrawable().getIntrinsicWidth()/2 + w;
-        mDotView.onSizeChanged(width, h);
+        int width = getDrawable().getIntrinsicWidth() / 2 + w;
+        width = width + getPaddingLeft() - getPaddingRight();
+        int height = h + getPaddingTop() - getPaddingBottom();
+        mDotView.onSizeChanged(width, height, false);
     }
 
     @Override

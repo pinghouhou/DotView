@@ -132,11 +132,17 @@ public class DotView {
         }
     }
 
-    protected void onSizeChanged(int w, int h) {
-        mViewWidth = w;
-        mViewHeight = h + mView.getPaddingTop() - mView.getPaddingBottom();
-        mExtraX = mMarginLeft + mDotHorizontalPadding - mView.getPaddingRight();
-        mExtraY = mMarginTop;
+    protected void onSizeChanged(int w, int h, boolean isText) {
+        if (isText) {
+            mViewWidth = w;
+            mViewHeight = h + mView.getPaddingTop() - mView.getPaddingBottom();
+            mExtraX = mMarginLeft + mDotHorizontalPadding - mView.getPaddingRight();
+        } else {
+            mViewWidth = w + mView.getPaddingLeft() - mView.getPaddingRight();
+            mViewHeight = h;
+            mExtraX = mMarginLeft + mDotHorizontalPadding;
+            mExtraY = mMarginTop + mView.getPaddingTop();
+        }
 
         if (mDotGravity == DOT_GRAVITY_TOP) {
             mDotRectF = new RectF(mViewWidth / 2 + mExtraX - mDotWidth / 2,

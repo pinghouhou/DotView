@@ -26,7 +26,7 @@ public class DotTextView extends TextView {
         super.onSizeChanged(w, h, oldw, oldh);
         int textWidth = (int) (getPaint().measureText(getText().toString()) + getPaddingLeft() + getPaddingRight());
         int width = mIsFollowText ? textWidth * 2 : w;
-        mDotView.onSizeChanged(width, h);
+        mDotView.onSizeChanged(width, h, true);
     }
 
     @Override
@@ -34,6 +34,5 @@ public class DotTextView extends TextView {
         super.onDraw(canvas);
         mDotView.draw(canvas);
     }
-
 
 }
