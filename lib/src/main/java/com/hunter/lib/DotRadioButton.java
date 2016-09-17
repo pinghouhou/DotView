@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 
-public class DotRadioButton extends RadioButton {
+public class DotRadioButton extends RadioButton implements IDot {
 
     private DotView mDotView;
 
@@ -19,8 +19,8 @@ public class DotRadioButton extends RadioButton {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Drawable[] drawables = getCompoundDrawables();
-        int width = drawables[1].getIntrinsicWidth() / 2 + w;
-        mDotView.onSizeChanged(width, h, true);
+        int width = drawables[1].getIntrinsicWidth() + w;
+        mDotView.onSizeChanged(width, h);
     }
 
     @Override
@@ -29,4 +29,23 @@ public class DotRadioButton extends RadioButton {
         mDotView.draw(canvas);
     }
 
+    @Override
+    public void setTipsCount(int tipsCount) {
+        mDotView.setTipsCount(tipsCount);
+    }
+
+    @Override
+    public int getTipsCount() {
+        return mDotView.getTipsCount();
+    }
+
+    @Override
+    public void setIsShow(boolean isShowDot) {
+        mDotView.setIsShow(isShowDot);
+    }
+
+    @Override
+    public void setColor(int color) {
+        mDotView.setColor(color);
+    }
 }

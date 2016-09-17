@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class DotTextView extends TextView {
+public class DotTextView extends TextView  implements IDot{
 
     private DotView mDotView;
 
@@ -26,7 +26,7 @@ public class DotTextView extends TextView {
         super.onSizeChanged(w, h, oldw, oldh);
         int textWidth = (int) (getPaint().measureText(getText().toString()) + getPaddingLeft() + getPaddingRight());
         int width = mIsFollowText ? textWidth * 2 : w;
-        mDotView.onSizeChanged(width, h, true);
+        mDotView.onSizeChanged(width, h);
     }
 
     @Override
@@ -35,4 +35,23 @@ public class DotTextView extends TextView {
         mDotView.draw(canvas);
     }
 
+    @Override
+    public void setTipsCount(int tipsCount) {
+        mDotView.setTipsCount(tipsCount);
+    }
+
+    @Override
+    public int getTipsCount() {
+        return mDotView.getTipsCount();
+    }
+
+    @Override
+    public void setIsShow(boolean isShowDot) {
+        mDotView.setIsShow(isShowDot);
+    }
+
+    @Override
+    public void setColor(int color) {
+        mDotView.setColor(color);
+    }
 }

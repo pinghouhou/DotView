@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DotTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableRight">@drawable/ic_arrow_right</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:text">Dot View</item>
+    </style>
+
+    <style name="TabRadioButton">
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:drawableTop">@drawable/ic_face</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">Dot</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textColor">#565656</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>

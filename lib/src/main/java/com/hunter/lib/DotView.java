@@ -6,46 +6,56 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetricsInt;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 public class DotView {
 
-    public static final int DOT_GRAVITY_TOP             = 0;
-    public static final int DOT_GRAVITY_CENTER_VERTICAL = 1;
+    /**
+     * 默认圆点宽高
+     */
+    public static final int DOT_CIRCLE_SPEC     = 15;
+    public static final int DOT_OVAL_WIDTH      = 20;
+    public static final int DOT_NONE_COUNT_SPEC = 8;
 
     public static final int DEF_COLOR_RED = Color.parseColor("#FD3737");
+
+    public static final int DOT_GRAVITY_TOP = 0;
+
+    protected Context mContext;
 
     protected Paint mPaint;
     protected Paint mTextPaint;
 
-    protected int mTipsCount;
-
-    protected int mMarginLeft;
-    protected int mMarginTop;
-
-    protected int mDotHorizontalPadding;
-
+    /**
+     * 自定义属性
+     */
+    protected int     mTipsCount;
+    protected int     mMarginLeft;
+    protected int     mMarginTop;
+    protected int     mDotHorizontalPadding;
+    protected int     mDotGravity;
     protected boolean mIsShowDot;
     protected int     mDotColor;
-    protected int     mDotGravity;
 
-    protected int mDotWidth;
-    protected int mDotHeight;
+    protected int   mDotWidth;
+    protected int   mDotHeight;
+    protected int   mDotRadius;
+    protected RectF mDotOvalRectF;
 
-    protected int mDotRadius;
+    protected View mView;
+    protected int  mViewWidth;
+    protected int  mViewHeight;
 
-    protected RectF mDotRectF;
-    protected Rect  mTextRect;
+    protected int mDotCircleSpec;
+    protected int mDotOvalWidth;
+    protected int mDotNoneCountSpec;
 
-    protected int mViewWidth;
-    protected int mViewHeight;
-
-    protected View    mView;
-    protected Context mContext;
-
+    /**
+     * 计算 View 额外的 Padding 值
+     */
     protected int mExtraX;
     protected int mExtraY;
 
@@ -65,10 +75,12 @@ public class DotView {
         if (mTipsCount > 0) mIsShowDot = true;
         array.recycle();
 
-        init();
+        initPaint();
+        initDot();
+        resetCount();
     }
 
-    private void init() {
+    private void initPaint() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(mDotColor);
 
@@ -76,20 +88,22 @@ public class DotView {
         mTextPaint.setColor(Color.WHITE);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setFakeBoldText(true);
-        mTextRect = new Rect();
+    }
 
-        resetCount();
+    private void initDot() {
+        mDotCircleSpec = DotUtils.dp2px(mContext, DOT_CIRCLE_SPEC);
+        mDotOvalWidth = DotUtils.dp2px(mContext, DOT_OVAL_WIDTH);
+        mDotNoneCountSpec = DotUtils.dp2px(mContext, DOT_NONE_COUNT_SPEC);
     }
 
     private void resetCount() {
         if (mTipsCount >= 10) {
-            mDotWidth = DotUtils.getRectWidthDp(mContext);
-            mDotHeight = DotUtils.getCircleDp(mContext);
+            mDotWidth = mDotOvalWidth;
+            mDotHeight = mDotCircleSpec;
         } else if (mTipsCount > 0) {
-            mDotWidth = DotUtils.getCircleDp(mContext);
-            mDotHeight = DotUtils.getCircleDp(mContext);
+            mDotHeight = mDotWidth = mDotCircleSpec;
         } else {
-            mDotHeight = mDotWidth = DotUtils.getNoneDp(mContext);
+            mDotHeight = mDotWidth = mDotNoneCountSpec;
         }
         mDotRadius = mDotWidth / 2;
 
@@ -115,12 +129,11 @@ public class DotView {
     }
 
     private void drawOvalDot(Canvas canvas) {
-        canvas.drawRoundRect(mDotRectF, (int) (mDotWidth * 0.3), (int) (mDotWidth * 0.3), mPaint);
+        canvas.drawRoundRect(mDotOvalRectF, (int) (mDotWidth * 0.3), (int) (mDotWidth * 0.3), mPaint);
     }
 
     private void drawText(Canvas canvas) {
         String text = mTipsCount > 99 ? "99+" : (mTipsCount + "");
-        mTextPaint.getTextBounds(text, 0, text.length(), mTextRect);
         FontMetricsInt fontMetrics = mTextPaint.getFontMetricsInt();
 
         if (mDotGravity == DOT_GRAVITY_TOP) {
@@ -132,28 +145,24 @@ public class DotView {
         }
     }
 
-    protected void onSizeChanged(int w, int h, boolean isText) {
-        if (isText) {
+    protected void onSizeChanged(int w, int h) {
+        if (mView instanceof TextView) {
             mViewWidth = w;
-            mViewHeight = h + mView.getPaddingTop() - mView.getPaddingBottom();
             mExtraX = mMarginLeft + mDotHorizontalPadding - mView.getPaddingRight();
         } else {
             mViewWidth = w + mView.getPaddingLeft() - mView.getPaddingRight();
-            mViewHeight = h;
             mExtraX = mMarginLeft + mDotHorizontalPadding;
-            mExtraY = mMarginTop + mView.getPaddingTop();
         }
+        mViewHeight = h + mView.getPaddingTop() - mView.getPaddingBottom();
+        mExtraY = mMarginTop;
 
+        float left = mViewWidth / 2 + mExtraX - mDotOvalWidth / 2;
         if (mDotGravity == DOT_GRAVITY_TOP) {
-            mDotRectF = new RectF(mViewWidth / 2 + mExtraX - mDotWidth / 2,
-                                  mDotHeight / 2 + mExtraY,
-                                  mViewWidth / 2 + mDotWidth + mExtraX - mDotWidth / 2,
-                                  mDotHeight / 2 + mDotHeight + mExtraY);
+            float top = mDotCircleSpec / 2 + mExtraY;
+            mDotOvalRectF = new RectF(left, top, left + mDotOvalWidth, top + mDotCircleSpec);
         } else {
-            mDotRectF = new RectF(mViewWidth / 2 + mExtraX - mDotWidth / 2,
-                                  mViewHeight / 2 - mDotHeight / 2 + mExtraY,
-                                  mViewWidth / 2 + mDotWidth + mExtraX - mDotWidth / 2,
-                                  mViewHeight / 2 + mDotHeight / 2 + mExtraY);
+            float top = mViewHeight / 2 - mDotCircleSpec / 2 + mExtraY;
+            mDotOvalRectF = new RectF(left, top, left + mDotOvalWidth, top + mDotCircleSpec);
         }
     }
 

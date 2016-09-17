@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,54 +8,87 @@
     android:orientation="vertical"
     tools:context="com.hunter.dotview.MainActivity">
 
-    <com.hunter.lib.DotTextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1AA"
-        android:text="1222221233"
-        app:dot_gravity="center_vertical"
-        app:dot_is_follow_text="true"
-        app:dot_tips_count="3"/>
+        android:divider="@drawable/divider_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:showDividers="middle|end">
+
+        <com.hunter.lib.DotTextView
+            style="@style/DotTextView"
+            app:dot_gravity="center_vertical"
+            app:dot_horizontal_padding="12dp"
+            app:dot_is_follow_text="true"
+            app:dot_tips_count="3"/>
+
+        <com.hunter.lib.DotTextView
+            style="@style/DotTextView"
+            app:dot_color="@color/colorAccent"
+            app:dot_horizontal_padding="12dp"
+            app:dot_is_follow_text="true"
+            app:dot_tips_count="13"/>
+
+        <com.hunter.lib.DotTextView
+            style="@style/DotTextView"
+            app:dot_gravity="center_vertical"
+            app:dot_horizontal_padding="12dp"
+            app:dot_is_follow_text="true"
+            app:dot_tips_count="113"/>
+
+        <com.hunter.lib.DotTextView
+            style="@style/DotTextView"
+            app:dot_gravity="center_vertical"
+            app:dot_horizontal_padding="12dp"
+            app:dot_is_follow_text="true"
+            app:dot_is_show="true"/>
+    </LinearLayout>
 
     <com.hunter.lib.DotImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-        app:dot_tips_count="116"/>
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_web"
+        app:dot_tips_count="16"/>
 
     <RadioGroup
-        android:orientation="horizontal"
+        android:id="@+id/group_tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <com.hunter.lib.DotRadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="13"
-            app:dot_tips_count="16"/>
+            style="@style/TabRadioButton"
+            app:dot_color="@android:color/holo_orange_dark"
+            app:dot_margin_top="-4dp"
+            app:dot_tips_count="2"/>
 
         <com.hunter.lib.DotRadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="13"
-            app:dot_tips_count="16"/>
+            style="@style/TabRadioButton"
+            app:dot_color="@android:color/holo_red_light"
+            app:dot_is_show="true"/>
 
         <com.hunter.lib.DotRadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="13"
-            app:dot_tips_count="16"/>
+            style="@style/TabRadioButton"
+            app:dot_color="@android:color/holo_blue_bright"
+            app:dot_margin_top="-4dp"
+            app:dot_tips_count="22"/>
+
+        <com.hunter.lib.DotRadioButton
+            style="@style/TabRadioButton"
+            app:dot_color="@android:color/holo_red_light"
+            app:dot_is_show="true"/>
     </RadioGroup>
-</LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@id/group_tab"
+        android:background="#E3E3E3"/>
+</RelativeLayout>

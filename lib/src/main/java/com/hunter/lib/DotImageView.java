@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class DotImageView extends ImageView {
+public class DotImageView extends ImageView implements IDot{
 
     private DotView mDotView;
 
@@ -18,9 +18,7 @@ public class DotImageView extends ImageView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         int width = getDrawable().getIntrinsicWidth() / 2 + w;
-        width = width + getPaddingLeft() - getPaddingRight();
-        int height = h + getPaddingTop() - getPaddingBottom();
-        mDotView.onSizeChanged(width, height, false);
+        mDotView.onSizeChanged(width, h);
     }
 
     @Override
@@ -28,5 +26,23 @@ public class DotImageView extends ImageView {
         super.onDraw(canvas);
         mDotView.draw(canvas);
     }
+    @Override
+    public void setTipsCount(int tipsCount) {
+        mDotView.setTipsCount(tipsCount);
+    }
 
+    @Override
+    public int getTipsCount() {
+        return mDotView.getTipsCount();
+    }
+
+    @Override
+    public void setIsShow(boolean isShowDot) {
+        mDotView.setIsShow(isShowDot);
+    }
+
+    @Override
+    public void setColor(int color) {
+        mDotView.setColor(color);
+    }
 }
