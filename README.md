@@ -11,4 +11,4 @@
 | dot_color | color |
 | dot_horizontal_padding | dimension |
 | dot_gravity | top OR center_vertical |
-| DotTextView(only for DotTextView) | boolean |
+| dot_is_follow_text(only for DotTextView) | boolean |
